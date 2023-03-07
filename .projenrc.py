@@ -5,7 +5,7 @@ from typing import List, Tuple, Union
 from projen import FileBase, IniFile, SampleDir, TomlFile, YamlFile
 from projen.python import PythonProject
 
-MODULE_NAME = "projen_template"
+MODULE_NAME = "repos_recsys"
 
 # Folders holding all our modules with code.
 ROOT_MODULE_DIR = "src"
@@ -151,7 +151,7 @@ class PythonRepoAnalyzerProject(PythonProject):
         if self.flake8:
             contents["repos"].append(
                 {
-                    "repo": "https://gitlab.com/pycqa/flake8",
+                    "repo": "https://github.com/pycqa/flake8",
                     "rev": "5.0.4",
                     "hooks": [
                         {"id": "flake8"},
@@ -163,7 +163,7 @@ class PythonRepoAnalyzerProject(PythonProject):
             contents["repos"].append(
                 {
                     "repo": "https://github.com/PyCQA/isort",
-                    "rev": "5.10.1",
+                    "rev": "5.12.0",
                     "hooks": [
                         {"id": "isort"},
                     ],
@@ -197,11 +197,6 @@ class PythonRepoAnalyzerProject(PythonProject):
     def add_pytest(self):
         additional_options = [
             "--import-mode=importlib",
-            "--cov",
-            "--no-cov-on-fail",
-            "--cov-branch",
-            "--cov-report=term",
-            "--cov-report=html",
             "--color=yes",
             "--code-highlight=yes",
             "--verbosity=2",
@@ -244,7 +239,7 @@ class PythonRepoAnalyzerProject(PythonProject):
 
 project = PythonRepoAnalyzerProject(
     author_email="46250621+DeadlySquad13@users.noreply.github.com",
-    author_name="DeadlySquad13",
+    author_name="Nbslab",
     module_name=MODULE_NAME,
     name="projen_template",
     version="0.1.0",
