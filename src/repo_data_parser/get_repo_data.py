@@ -16,17 +16,12 @@ def is_github_repo_url(url: str) -> bool:
 
 
 def extract_fields_from_repo_url(repository_url: str) -> dict:
-    """Used to extract name of repository and name of the User owner of the repository
+    """
+    Used to extract name of repository and name of the User owner of the repository
 
-    Parameters
-    ----------
-    repository_url : str
-        url of the github repository
-
-    Returns
-    -------
-    dict
-        dict with repo name, name of the owner of the repo, and full_name of repo
+    :param repository_url: url of the github repository
+    :type repository_url: str
+    :return: dict with repo name, name of the owner of the repo, and full_name of repo
     """
     if repository_url.endswith(".git"):
         repository_url = repository_url.replace(".git", "")
@@ -38,17 +33,13 @@ def extract_fields_from_repo_url(repository_url: str) -> dict:
 
 
 def get_repo_info(url: str) -> dict:
-    """Used to request data from github repository and group it in dict
+    """
+    Used to request data from github repository and group it in dict
 
-    Parameters
-    ----------
-    repo_fullname : str
-        fullname of the repo in format {owner}/{repo-name}
+    :param url: url of the github repository
+    :type url: str
 
-    Returns
-    -------
-    dict
-        dict with data gained from requests
+    :return: dict with data gained from requests
     """
 
     if not is_github_repo_url(url):
