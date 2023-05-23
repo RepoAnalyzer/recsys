@@ -1,5 +1,6 @@
 import re
 
+import github
 from github import Github
 
 
@@ -10,9 +11,23 @@ def is_github_repo_url(url: str) -> bool:
     example, https://github.com/eleventigers/awesome-rxjava#readme
     See [available symbols in github repository name](shorturl.at/ACFG0).
     """
-    return bool(
+    if not bool(
         re.compile(r"^https?://github.com/[\w.-]+/[\w.-]+(#[\w.-]+)?").fullmatch(url)
-    )
+    ):
+        return False
+    else:
+        g = Github("")
+        result = extract_fields_from_repo_url(url)
+        try:
+            g.get_repo(f"{result['owner']}/{result['name']}")
+        except github.GithubException.UnknownObjectException:
+            print(
+                "Такого репозитория не существует, проверьте правильность "
+                "вводимых данных"
+            )
+            return False
+        else:
+            return True
 
 
 def extract_fields_from_repo_url(repository_url: str) -> dict:
@@ -45,7 +60,7 @@ def get_repo_info(url: str) -> dict:
     if not is_github_repo_url(url):
         raise ValueError("No GitHub url provided")
     result = extract_fields_from_repo_url(url)
-    g = Github("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")
+    g = Github("")
     repo = g.get_repo(f"{result['owner']}/{result['name']}")
     result["full_name"] = repo.full_name
     result["language"] = repo.language
