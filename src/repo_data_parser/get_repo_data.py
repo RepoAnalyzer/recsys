@@ -29,7 +29,7 @@ def extract_fields_from_repo_url(repository_url: str) -> dict:
         name_space = str(matches.group(3))
         project = str(matches.group(4))
 
-    return {"project": project, "owner": name_space}
+    return {"name": project, "owner": name_space}
 
 
 def get_repo_info(url: str) -> dict:
@@ -45,14 +45,14 @@ def get_repo_info(url: str) -> dict:
     if not is_github_repo_url(url):
         raise ValueError("No GitHub url provided")
     result = extract_fields_from_repo_url(url)
-    g = Github()
-    repo = g.get_repo(f"{result['owner']}/{result['project']}")
+    g = Github("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")
+    repo = g.get_repo(f"{result['owner']}/{result['name']}")
+    result["full_name"] = repo.full_name
     result["language"] = repo.language
     result["stars"] = repo.stargazers_count
     result["watchers"] = repo.watchers_count
     result["forks"] = repo.forks_count
-    result["issue"] = repo.get_issues().totalCount
-    result["pr"] = repo.get_pulls().totalCount
+    result["open_issues"] = repo.get_issues().totalCount
     result["description"] = repo.description
     result["commits"] = repo.get_commits().totalCount
     result["topics"] = ", ".join(repo.get_topics())
